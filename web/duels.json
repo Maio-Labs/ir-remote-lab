@@ -1,0 +1,44 @@
+[
+  {
+    "id": "skim-module",
+    "title": "Skim a module",
+    "question": "What is in the NEC module?",
+    "baseline": {"label": "Read the whole file", "command": "cat src/protocols/nec.c"},
+    "tool": {"label": "graft skeleton", "command": "graft skeleton src/protocols/nec.c", "requires": "graft"}
+  },
+  {
+    "id": "explain-decoding",
+    "title": "Understand a flow",
+    "question": "How is an IR signal decoded?",
+    "baseline": {"label": "Read every source file", "command": "cat include/irlab.h src/*.h src/*.c src/protocols/*.c src/cli/main.c"},
+    "tool": {"label": "graft ask", "command": "graft ask \"how is an IR signal decoded\" --source", "requires": "graft"}
+  },
+  {
+    "id": "search",
+    "title": "Search the code",
+    "question": "Where does the code decode?",
+    "baseline": {"label": "grep", "command": "grep -rn decode src include tests web"},
+    "tool": {"label": "graft grep", "command": "graft grep decode", "requires": "graft"}
+  },
+  {
+    "id": "list-files",
+    "title": "Map the project",
+    "question": "What files does the project have?",
+    "baseline": {"label": "ls -laR", "command": "ls -laR src include tests web docs"},
+    "tool": {"label": "rtk ls", "command": "rtk ls -R src include tests web docs", "requires": "rtk"}
+  },
+  {
+    "id": "run-tests",
+    "title": "Run the tests",
+    "question": "Do the tests pass?",
+    "baseline": {"label": "make test", "command": "make test"},
+    "tool": {"label": "rtk test", "command": "rtk test make test", "requires": "rtk"}
+  },
+  {
+    "id": "history",
+    "title": "Read the history",
+    "question": "What changed recently?",
+    "baseline": {"label": "git log --stat", "command": "git log --stat -5"},
+    "tool": {"label": "rtk git log", "command": "rtk git log -5", "requires": "rtk"}
+  }
+]

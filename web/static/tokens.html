@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Token Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="dot"></span>IR Remote Lab</div>
+    <nav>
+      <a href="/">Remote</a>
+      <a href="/tokens.html" class="active">Token lab</a>
+    </nav>
+    <div id="backend" class="pill">checking…</div>
+  </header>
+
+  <main class="tokens">
+    <section class="panel hero">
+      <h1>Token lab</h1>
+      <p>An agent pays for every character it reads. Each duel asks one question two ways, with a plain
+        command and with rtk or graft, and measures the text that would land in the agent's context.</p>
+      <div class="race">
+        <div class="race-row">
+          <span class="name">Without tools</span>
+          <div class="track"><div id="raceBase" class="fill base"></div></div>
+          <span id="raceBaseNum" class="num">0</span>
+        </div>
+        <div class="race-row">
+          <span class="name">With rtk and graft</span>
+          <div class="track"><div id="raceTool" class="fill tool"></div></div>
+          <span id="raceToolNum" class="num">0</span>
+        </div>
+        <div class="window">
+          <span>Share of a 200k-token context window</span>
+          <div class="box"><i id="windowBase" class="base"></i></div>
+          <div class="box"><i id="windowTool" class="tool"></i></div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button id="runAll" class="btn primary">Run every duel</button>
+        <span id="saving" class="saving"></span>
+        <span class="note">Tokens are estimated as characters ÷ 4.</span>
+      </div>
+    </section>
+
+    <section id="duels" class="duels"></section>
+
+    <section class="panel">
+      <h2>Session replay</h2>
+      <p class="note">Ask Claude Code the same question twice in this folder: once as it is, once with rtk and graft
+        set up. Pick the two sessions (or drop their .jsonl files) and press Play.
+        Sessions are read from <code id="sessionFolder">…</code></p>
+      <div class="slots">
+        <div class="slot a" data-slot="a">
+          <input class="slot-name" value="Without tools" aria-label="Name of session A">
+          <select aria-label="Session A"></select>
+          <div class="drop">or drop a .jsonl transcript here</div>
+          <div class="slot-meta"></div>
+          <div class="gauges">
+            <svg class="gauge" viewBox="0 0 170 105" aria-label="Context now">
+              <path d="M 15 90 A 70 70 0 0 1 155 90" fill="none" stroke="#243051" stroke-width="14" stroke-linecap="round"/>
+              <path class="arc" d="M 15 90 A 70 70 0 0 1 155 90" fill="none" stroke="#ff3d68" stroke-width="14" stroke-linecap="round"/>
+              <text class="value" x="85" y="80" text-anchor="middle">0</text>
+              <text class="label" x="85" y="100" text-anchor="middle">context now</text>
+            </svg>
+            <div class="counters">
+              <div class="counter"><span>Input read</span><b data-k="input">0</b></div>
+              <div class="counter"><span>Output</span><b data-k="output">0</b></div>
+              <div class="counter"><span>Tool results</span><b data-k="tools">0</b></div>
+              <div class="counter"><span>Turns</span><b data-k="turns">0</b></div>
+            </div>
+          </div>
+          <div class="feed"></div>
+        </div>
+        <div class="slot b" data-slot="b">
+          <input class="slot-name" value="With rtk and graft" aria-label="Name of session B">
+          <select aria-label="Session B"></select>
+          <div class="drop">or drop a .jsonl transcript here</div>
+          <div class="slot-meta"></div>
+          <div class="gauges">
+            <svg class="gauge" viewBox="0 0 170 105" aria-label="Context now">
+              <path d="M 15 90 A 70 70 0 0 1 155 90" fill="none" stroke="#243051" stroke-width="14" stroke-linecap="round"/>
+              <path class="arc" d="M 15 90 A 70 70 0 0 1 155 90" fill="none" stroke="#4fe0d2" stroke-width="14" stroke-linecap="round"/>
+              <text class="value" x="85" y="80" text-anchor="middle">0</text>
+              <text class="label" x="85" y="100" text-anchor="middle">context now</text>
+            </svg>
+            <div class="counters">
+              <div class="counter"><span>Input read</span><b data-k="input">0</b></div>
+              <div class="counter"><span>Output</span><b data-k="output">0</b></div>
+              <div class="counter"><span>Tool results</span><b data-k="tools">0</b></div>
+              <div class="counter"><span>Turns</span><b data-k="turns">0</b></div>
+            </div>
+          </div>
+          <div class="feed"></div>
+        </div>
+      </div>
+      <div class="replay-controls">
+        <button id="play" class="btn primary">Play</button>
+        <label class="note">Speed
+          <select id="speed" style="width:auto">
+            <option value="1">1×</option>
+            <option value="2" selected>2×</option>
+            <option value="4">4×</option>
+          </select>
+        </label>
+        <span class="note">Input read counts every token sent to the model on each turn, cached or not.</span>
+      </div>
+      <div id="replayVerdict" class="replay-verdict"></div>
+    </section>
+  </main>
+
+  <script src="tokens.js"></script>
+</body>
+</html>

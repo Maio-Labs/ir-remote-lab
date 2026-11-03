@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IR Remote Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="dot"></span>IR Remote Lab</div>
+    <nav>
+      <a href="/" class="active">Remote</a>
+      <a href="/tokens.html">Token lab</a>
+    </nav>
+    <div id="backend" class="pill">checking…</div>
+  </header>
+
+  <main class="lab">
+    <aside>
+      <div class="remote">
+        <div id="led" class="led"></div>
+        <div class="remote-label">IR LAB</div>
+        <div id="protocols" class="protos"></div>
+        <label class="addr">Address
+          <input id="address" class="text" value="4" placeholder="4 or 0x04" autocomplete="off">
+        </label>
+        <div id="keys" class="keys"></div>
+        <form id="custom" class="custom">
+          <label for="customCommand">Custom command</label>
+          <input id="customCommand" class="text" placeholder="e.g. 70 or 0x46" autocomplete="off">
+          <button class="btn" type="submit">Send</button>
+        </form>
+      </div>
+    </aside>
+
+    <section class="stage">
+      <div class="panel air">
+        <div id="beam" class="beam"><span id="beamCaption" class="caption">Press a key</span></div>
+        <div class="tv">
+          <div id="tvScreen" class="tv-screen">
+            <div class="tv-name">LAB TV</div>
+            <div id="tvChannel" class="tv-channel">01</div>
+            <div class="tv-osd"><div id="tvOsd"></div><div id="tvVolume" class="tv-volume"></div></div>
+            <div id="tvStatic" class="tv-static">NO SIGNAL</div>
+          </div>
+          <div class="tv-foot"><span id="rxEye" class="rx-eye"></span>IR receiver</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Signal</h2>
+          <div id="waveMeta" class="meta">Mark = carrier on, space = carrier off</div>
+        </div>
+        <div class="wave-wrap"><canvas id="wave"></canvas></div>
+        <div id="legend" class="legend"></div>
+      </div>
+
+      <div class="row2">
+        <div class="panel">
+          <h2>Receiver</h2>
+          <div id="status" class="status idle"><span class="icon">·</span><div>Waiting<small>Press a key on the remote</small></div></div>
+          <table class="compare">
+            <thead><tr><th></th><th>Sent</th><th>Received</th></tr></thead>
+            <tbody id="compare"></tbody>
+          </table>
+        </div>
+
+        <div class="panel">
+          <h2>Receiver noise</h2>
+          <div class="slider">
+            <label for="jitter">Timing jitter <b id="jitterValue">±0%</b></label>
+            <input id="jitter" type="range" min="0" max="40" value="0">
+          </div>
+          <label class="note" for="raw">Received timings in µs (edit them and decode)</label>
+          <textarea id="raw" spellcheck="false"></textarea>
+          <div class="raw-actions">
+            <select id="rawProtocol"><option value="auto">Detect protocol</option></select>
+            <button id="decodeRaw" class="btn">Decode</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Presses</h2>
+        <ol id="log" class="log"></ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="remote.js"></script>
+</body>
+</html>
